@@ -1,0 +1,4 @@
+# note the setting 'git config core.autocrlf false' will prevent git from changing the line endings
+
+# Denote all files that are truly binary and should not be modified.
+*.conf binary

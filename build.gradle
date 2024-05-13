@@ -1,0 +1,128 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+
+    dependencies {
+        classpath('io.spring.gradle:dependency-management-plugin:1.1.4')
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.4.5')
+    }
+}
+
+group = 'com.hamiltron'
+
+apply plugin: 'java-library'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot:3.2.3'
+    implementation 'org.springframework.boot:spring-boot-starter:3.2.3'
+    implementation 'org.springframework.boot:spring-boot-starter-logging:3.2.3'
+    implementation 'org.springframework.boot:spring-boot-starter-batch:3.2.3'
+    implementation 'org.springframework.batch:spring-batch-core:5.1.1'
+    implementation 'org.springframework.batch:spring-batch-infrastructure:5.1.1'
+    implementation 'org.springframework.ws:spring-ws-security:4.0.10'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'commons-collections:commons-collections:3.2.2'
+
+    testImplementation 'ch.qos.logback:logback-classic:1.4.14'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-migrationsupport:5.10.2'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.10.2'
+    testImplementation 'org.springframework.batch:spring-batch-test:5.1.1'
+    testImplementation 'org.springframework:spring-mock:2.0.8'
+    testImplementation 'org.hsqldb:hsqldb:2.7.2'
+    testImplementation 'org.junit.platform:junit-platform-engine:1.10.2'
+    testImplementation 'org.junit.platform:junit-platform-commons:1.10.2'
+    testImplementation 'org.springframework:spring-test:6.1.4'
+
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.14'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:1.6.2'
+    testRuntimeOnly 'org.springframework:spring-core:6.1.4'
+    testRuntimeOnly 'org.springframework:spring-context:6.1.4'
+    testRuntimeOnly 'org.springframework:spring-beans:6.1.4'
+    testRuntimeOnly 'org.springframework:spring-expression:6.1.4'
+
+}
+
+//ensure given spring packages are 6.1.4
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'org.springframework'
+                && (details.requested.name == 'spring-core'
+                || details.requested.name == 'spring-context'
+                || details.requested.name == 'spring-beans'
+                || details.requested.name == 'spring-expression'
+                || details.requested.name == 'spring-aop')
+        ) {
+            details.useVersion '6.1.4'
+        }
+    }
+}
+
+project.setProperty('version', '1.0')
+java.sourceCompatibility = JavaVersion.VERSION_17
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    archiveBaseName = 'spring-batch-inmem-db'
+    archiveVersion = "${project.version.toString()}"
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.addAll(['-Xlint:deprecation', '-Xlint:unchecked'])
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.addAll(['-Xlint:deprecation', '-Xlint:unchecked'])
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        // For log level LIFECYCLE
+        events "standardOut", "started", "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showExceptions true
+        showCauses true
+        showStackTraces true
+
+        // For log level DEBUG and INFO
+        debug {
+            events "standardOut", "started", "passed", "skipped", "failed"
+            exceptionFormat "full"
+            showExceptions true
+            showCauses true
+            showStackTraces true
+        }
+
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
+}

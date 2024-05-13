@@ -1,0 +1,11 @@
+<ehcache name="batchDs">
+ <defaultCache
+     maxElementsInMemory="100"
+     eternal="false"
+     timeToIdleSeconds="300"
+     timeToLiveSeconds="300"
+     overflowToDisk="false"
+     diskPersistent="false"
+     memoryStoreEvictionPolicy="LRU"
+     />
+</ehcache>
