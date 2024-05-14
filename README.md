@@ -9,8 +9,8 @@
 
 
 ## Project Overview
-Spring Boot Batch application configuration with using in test HSQLDB (HyperSQL DataBase) open-source RDBMS. 
-HSQLDB is used as running in-memory to test Spring Batch job execution.
+Spring Boot Batch configuration with using in test HSQLDB (HyperSQL) open-source RDBMS. 
+HSQLDB is used in-memory to feature-test Spring Batch job execution.
 
 ### Software requirements
 - Java JDK 17+
@@ -26,11 +26,11 @@ Build with test execution:
 ```
 Only test:
 ```
-./gradlew test  --rerun-tasks
+./gradlew test --rerun-tasks
 ```
 For detailed test-log:
 ```
-./gradlew test  --rerun-tasks --debug
+./gradlew test --rerun-tasks --debug
 ```
 
 <span style="font-size:30px;">&#9888;</span> In case test fail, pls increase WAIT_TIME_MILS.
