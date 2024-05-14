@@ -22,15 +22,15 @@ HSQLDB is used in-memory to feature-test Spring Batch job execution.
 ### Building and execution
 Build with test execution:
 ```
-./gradlew build
+gradlew build
 ```
 Only test:
 ```
-./gradlew test --rerun-tasks
+gradlew test --rerun-tasks
 ```
 For detailed test-log:
 ```
-./gradlew test --rerun-tasks --debug
+gradlew test --rerun-tasks --debug
 ```
 
 <span style="font-size:30px;">&#9888;</span> In case test fail, pls increase WAIT_TIME_MILS.
