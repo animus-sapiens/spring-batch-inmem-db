@@ -14,7 +14,7 @@ HSQLDB is used as running in-memory to test Spring Batch job execution.
 
 ### Software requirements
 - Java JDK 17+
-- Gradle 7.4+
+- Gradle 8
 - Windows, Linux and macOS specified in
   <a target="_blank" href= https://www.oracle.com/java/technologies/javase/products-doc-jdk17certconfig.html >Oracle JDK 17 Certified System Configurations</a>
   or later.
@@ -26,14 +26,13 @@ Build with test execution:
 ```
 Only test:
 ```
-./gradlew test
+./gradlew test  --rerun-tasks
 ```
 For detailed test-log:
 ```
-./gradlew test --debug
+./gradlew test  --rerun-tasks --debug
 ```
 
-[!IMPORTANT]
 <span style="font-size:30px;">&#9888;</span> In case test fail, pls increase WAIT_TIME_MILS.
 
 ### License

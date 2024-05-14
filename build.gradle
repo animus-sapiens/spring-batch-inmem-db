@@ -73,7 +73,6 @@ configurations.all {
 }
 
 project.setProperty('version', '1.0')
-java.sourceCompatibility = JavaVersion.VERSION_17
 
 bootJar {
     enabled = false
