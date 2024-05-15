@@ -2,7 +2,6 @@ package com.github.spring.batch;
 
 import com.github.spring.batch.config.TestConfig;
 import org.joda.time.LocalDateTime;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,24 +12,23 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersValidator;
+import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.batch.core.job.DefaultJobParametersValidator;
-
-import com.github.spring.batch.config.BatchConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import java.util.concurrent.ExecutionException;
 
+import com.github.spring.batch.config.BatchConfig;
+
 import static org.junit.Assert.assertEquals;
 import static com.github.spring.batch.config.BatchConfig.PARAM_DATE;
-
-import org.springframework.test.context.aot.DisabledInAotMode;
 
 @DisabledInAotMode
 @ExtendWith(SpringExtension.class)
@@ -54,10 +52,6 @@ public class BatchConfigTest {
     public void setup() throws InterruptedException, ExecutionException, java.util.concurrent.TimeoutException {
         ((DefaultJobParametersValidator) mockValidator).setOptionalKeys(new String[0]);
         ((DefaultJobParametersValidator) mockValidator).setRequiredKeys(new String[0]);
-    }
-
-    @AfterEach
-    public void cleanUp() {
     }
 
     private JobParameters defaultJobParameters() {
