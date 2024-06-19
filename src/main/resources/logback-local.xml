@@ -2,9 +2,8 @@
 
 <configuration>
 
-    <springProperty name="ENV" source="com.ews.log.environment" defaultValue="UNKNOWN" />
-    <springProperty name="APP_NAME" source="com.ews.log.app.name" defaultValue="SPRING-BATCH-INMEM-DB" />
-    <springProperty name="APP_INSTANCE" source="com.ews.log.app.instance" defaultValue="SPRING-BATCH-INMEM-DB" />
+    <springProperty name="ENV" source="com.github.spring.batch.log.environment" defaultValue="UNKNOWN" />
+    <springProperty name="APP_NAME" source="com.github.spring.batch.log.app.name" defaultValue="SPRING-BATCH-INMEM-DB" />
     
     <property name="CONSOLE_LOG_PATTERN" value="[%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}] [%-5level] [%-12.12t] [host=${HOSTNAME},env=${ENV},app=${APP_NAME}] [%c{10}] - %m%n" />
 
@@ -14,17 +13,8 @@
             <charset>utf8</charset>
         </encoder>
     </appender>
-
-    <logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN" />
-    <logger name="org.crsh.plugin" level="WARN" />
-    <logger name="org.crsh.ssh" level="WARN" />
-    <logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="WARN" />    
         
-    <logger name="com.ews.zsc.dsu.writer" level="DEBUG" additivity="false">
-        <appender-ref ref="CONSOLE" />
-    </logger>
-    
-    <logger name="com.ews" level="INFO" additivity="false">
+    <logger level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
     
